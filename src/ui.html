@@ -22,6 +22,12 @@
   </label>
   <input class="form-control ids" type="text" id="ids" placeholder="Textbox Names" />
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="autoresizeoptions" id="quartermaster" /> 
+  <label class="form-check-label" for="quartermaster">
+    Quartermaster Updates
+  </label>
+</div>
 
 <hr />
 <div class="font-size-constraints">
@@ -36,27 +42,161 @@
   </div>
 </div>
 
+<div class="quartermaster-presets" style="display: none;">
+  <hr />
+  <h4>Quartermaster Presets</h4>
+  
+  <div class="preset-group">
+    <div class="preset-header">Full Body Content</div>
+    <div class="form-group">
+      <label>Textbox Name</label>
+      <input class="form-control" type="text" id="preset1_name" value="#Full_Body_Content" />
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Min Font Size (pt)</label>
+        <input class="form-control" type="number" id="preset1_min" value="6" min="0" step="0.5" />
+      </div>
+      <div class="form-group col-md-6">
+        <label>Max Font Size (pt)</label>
+        <input class="form-control" type="number" id="preset1_max" value="11" min="0" step="0.5" />
+      </div>
+    </div>
+  </div>
+  
+  <div class="preset-group">
+    <div class="preset-header">Display Name Line 1</div>
+    <div class="form-group">
+      <label>Textbox Name</label>
+      <input class="form-control" type="text" id="preset2_name" value="#Display_Name_Line_1" />
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Min Font Size (pt)</label>
+        <input class="form-control" type="number" id="preset2_min" value="12" min="0" step="0.5" />
+      </div>
+      <div class="form-group col-md-6">
+        <label>Max Font Size (pt)</label>
+        <input class="form-control" type="number" id="preset2_max" value="16" min="0" step="0.5" />
+      </div>
+    </div>
+  </div>
+  
+  <div class="preset-group">
+    <div class="preset-header">Display Name Line 2</div>
+    <div class="form-group">
+      <label>Textbox Name</label>
+      <input class="form-control" type="text" id="preset3_name" value="#Display_Name_Line_2" />
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Min Font Size (pt)</label>
+        <input class="form-control" type="number" id="preset3_min" value="9" min="0" step="0.5" />
+      </div>
+      <div class="form-group col-md-6">
+        <label>Max Font Size (pt)</label>
+        <input class="form-control" type="number" id="preset3_max" value="11" min="0" step="0.5" />
+      </div>
+    </div>
+  </div>
+  
+  <div class="preset-group">
+    <div class="preset-header">Display Name</div>
+    <div class="form-group">
+      <label>Textbox Name</label>
+      <input class="form-control" type="text" id="preset4_name" value="##Display_Name" />
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Min Font Size (pt)</label>
+        <input class="form-control" type="number" id="preset4_min" value="10.5" min="0" step="0.5" />
+      </div>
+      <div class="form-group col-md-6">
+        <label>Max Font Size (pt)</label>
+        <input class="form-control" type="number" id="preset4_max" value="12" min="0" step="0.5" />
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="buttons">
   <button class="btn btn-primary btn-lg" id="resize">Resize</button>
   <button class="btn btn-secondary btn-lg" id="cancel">Cancel</button>
 </div>
 
 <script>
+// Function to update UI based on selected option
+function updateUI() {
+    const selectedOption = document.querySelector('input[name="autoresizeoptions"]:checked').id;
+    
+    // Hide both sections by default
+    document.querySelector('.quartermaster-presets').style.display = 'none';
+    document.querySelector('.font-size-constraints').style.display = 'block';
+    
+    // Show the appropriate section based on selection
+    if (selectedOption === 'quartermaster') {
+        document.querySelector('.quartermaster-presets').style.display = 'block';
+        document.querySelector('.font-size-constraints').style.display = 'none';
+    }
+}
+
+// Run on page load
+updateUI();
+
+// Show/hide sections when option changes
+document.querySelectorAll('input[name="autoresizeoptions"]').forEach(radio => {
+    radio.addEventListener('change', updateUI);
+});
+
 document.getElementById('resize').onclick = () => {
     const resizeType = document.querySelector('input[name="autoresizeoptions"]:checked').id;
-    const textIds = document.getElementById('ids').value;
-    const minFontSize = parseFloat(document.getElementById('minFontSize').value) || null;
-    const maxFontSize = parseFloat(document.getElementById('maxFontSize').value) || null;
-    parent.postMessage({ pluginMessage: { 
-        type: resizeType, 
-        textIds: textIds,
-        minFontSize: minFontSize,
-        maxFontSize: maxFontSize
-    } }, '*')
+    
+    if (resizeType === 'quartermaster') {
+        // Process all four quartermaster presets
+        const presets = [
+            {
+                name: document.getElementById('preset1_name').value,
+                minFontSize: parseFloat(document.getElementById('preset1_min').value) || null,
+                maxFontSize: parseFloat(document.getElementById('preset1_max').value) || null
+            },
+            {
+                name: document.getElementById('preset2_name').value,
+                minFontSize: parseFloat(document.getElementById('preset2_min').value) || null,
+                maxFontSize: parseFloat(document.getElementById('preset2_max').value) || null
+            },
+            {
+                name: document.getElementById('preset3_name').value,
+                minFontSize: parseFloat(document.getElementById('preset3_min').value) || null,
+                maxFontSize: parseFloat(document.getElementById('preset3_max').value) || null
+            },
+            {
+                name: document.getElementById('preset4_name').value,
+                minFontSize: parseFloat(document.getElementById('preset4_min').value) || null,
+                maxFontSize: parseFloat(document.getElementById('preset4_max').value) || null
+            }
+        ];
+        
+        parent.postMessage({ pluginMessage: { 
+            type: resizeType,
+            presets: presets
+        } }, '*');
+    } else {
+        // Process normal selection or text options
+        const textIds = document.getElementById('ids').value;
+        const minFontSize = parseFloat(document.getElementById('minFontSize').value) || null;
+        const maxFontSize = parseFloat(document.getElementById('maxFontSize').value) || null;
+        
+        parent.postMessage({ pluginMessage: { 
+            type: resizeType, 
+            textIds: textIds,
+            minFontSize: minFontSize,
+            maxFontSize: maxFontSize
+        } }, '*');
+    }
 }
     
 document.getElementById('cancel').onclick = () => {
-    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
 }
 
 </script>

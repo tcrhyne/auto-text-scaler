@@ -1,7 +1,7 @@
 //This plugin resizes text to fit in its textbox
 
 // show form
-figma.showUI(__html__, { width: 400, height: 380 });
+figma.showUI(__html__, { width: 400, height: 580 });
 
 figma.ui.onmessage = msg => {
   // Extract font size constraints if provided
@@ -18,7 +18,7 @@ figma.ui.onmessage = msg => {
       }
     }))
   }
-  if (msg.type === 'text')
+  else if (msg.type === 'text')
   {
     const tIds = msg.textIds.split(',')
     const nodes: SceneNode[] = figma.currentPage.findAll(node => node.type === "TEXT" && tIds.includes(node.name))
@@ -30,8 +30,40 @@ figma.ui.onmessage = msg => {
       }
     }))
   }
-  
-  if (msg.type === 'cancel') {
+  else if (msg.type === 'quartermaster')
+  {
+    // Process each preset
+    const presets = msg.presets;
+    
+    // Process each preset sequentially to ensure fonts are loaded properly
+    const processPresets = async () => {
+      for (const preset of presets) {
+        const textName = preset.name;
+        const minFontSize = preset.minFontSize !== null ? preset.minFontSize : undefined;
+        const maxFontSize = preset.maxFontSize !== null ? preset.maxFontSize : undefined;
+        
+        // Find nodes matching the name
+        const nodes: SceneNode[] = figma.currentPage.findAll(node => 
+          node.type === "TEXT" && node.name === textName
+        );
+        
+        // Process each node
+        for (const node of nodes) {
+          if (node.type === 'TEXT') {
+            await loadFont(node.fontName);
+            resizeText(node, minFontSize, maxFontSize);
+          }
+        }
+      }
+      
+      // Notify user when all presets are processed
+      figma.notify(`Processed ${presets.length} preset groups`);
+    };
+    
+    // Start processing presets
+    processPresets();
+  }
+  else if (msg.type === 'cancel') {
     figma.closePlugin()
   }
 }
