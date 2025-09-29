@@ -10,34 +10,116 @@ figma.ui.onmessage = msg => {
   
   if (msg.type === 'selection'){
     const nodes = figma.currentPage.selection
-    nodes.forEach((node =>{
-      if (node.type === 'TEXT'){
-        loadFont(node.fontName).then(
-            ()=>resizeText(node, minFontSize, maxFontSize)
-          )
+    const totalNodes = nodes.filter(node => node.type === 'TEXT').length
+    let processedNodes = 0
+    
+    // Send initial progress update
+    figma.ui.postMessage({ 
+      type: 'progress-update', 
+      percent: 0,
+      status: `Processing 0/${totalNodes} text elements...`
+    })
+    
+    // Process each node and update progress
+    const processNodes = async () => {
+      for (const node of nodes) {
+        if (node.type === 'TEXT'){
+          await loadFont(node.fontName)
+          resizeText(node, minFontSize, maxFontSize)
+          
+          // Update progress
+          processedNodes++
+          const percent = Math.round((processedNodes / totalNodes) * 100)
+          figma.ui.postMessage({ 
+            type: 'progress-update', 
+            percent: percent,
+            status: `Processing ${processedNodes}/${totalNodes} text elements...`
+          })
+        }
       }
-    }))
+      
+      // Send completion message
+      figma.ui.postMessage({ 
+        type: 'progress-update', 
+        percent: 100,
+        status: `Completed! Processed ${processedNodes} text elements.`
+      })
+    }
+    
+    processNodes()
   }
   else if (msg.type === 'text')
   {
     const tIds = msg.textIds.split(',')
     const nodes: SceneNode[] = figma.currentPage.findAll(node => node.type === "TEXT" && tIds.includes(node.name))
-    nodes.forEach((node =>{
-      if (node.type === 'TEXT'){
-        loadFont(node.fontName).then(
-            ()=>resizeText(node, minFontSize, maxFontSize)
-          )
+    const totalNodes = nodes.length
+    let processedNodes = 0
+    
+    // Send initial progress update
+    figma.ui.postMessage({ 
+      type: 'progress-update', 
+      percent: 0,
+      status: `Processing 0/${totalNodes} text elements...`
+    })
+    
+    // Process each node and update progress
+    const processNodes = async () => {
+      for (const node of nodes) {
+        if (node.type === 'TEXT'){
+          await loadFont(node.fontName)
+          resizeText(node, minFontSize, maxFontSize)
+          
+          // Update progress
+          processedNodes++
+          const percent = Math.round((processedNodes / totalNodes) * 100)
+          figma.ui.postMessage({ 
+            type: 'progress-update', 
+            percent: percent,
+            status: `Processing ${processedNodes}/${totalNodes} text elements...`
+          })
+        }
       }
-    }))
+      
+      // Send completion message
+      figma.ui.postMessage({ 
+        type: 'progress-update', 
+        percent: 100,
+        status: `Completed! Processed ${processedNodes} text elements.`
+      })
+    }
+    
+    processNodes()
   }
   else if (msg.type === 'quartermaster')
   {
     // Process each preset
     const presets = msg.presets;
     
+    // Calculate total nodes to process
+    let totalNodesCount = 0;
+    let processedNodesCount = 0;
+    let currentPresetIndex = 0;
+    
+    // First count all nodes across all presets
+    for (const preset of presets) {
+      const textName = preset.name;
+      const nodes = figma.currentPage.findAll(node => 
+        node.type === "TEXT" && node.name === textName
+      );
+      totalNodesCount += nodes.length;
+    }
+    
+    // Send initial progress update
+    figma.ui.postMessage({ 
+      type: 'progress-update', 
+      percent: 0,
+      status: `Processing preset 1/${presets.length}: 0/${totalNodesCount} text elements...`
+    });
+    
     // Process each preset sequentially to ensure fonts are loaded properly
     const processPresets = async () => {
       for (const preset of presets) {
+        currentPresetIndex++;
         const textName = preset.name;
         const minFontSize = preset.minFontSize !== null ? preset.minFontSize : undefined;
         const maxFontSize = preset.maxFontSize !== null ? preset.maxFontSize : undefined;
@@ -52,12 +134,28 @@ figma.ui.onmessage = msg => {
           if (node.type === 'TEXT') {
             await loadFont(node.fontName);
             resizeText(node, minFontSize, maxFontSize);
+            
+            // Update progress
+            processedNodesCount++;
+            const percent = Math.round((processedNodesCount / totalNodesCount) * 100);
+            figma.ui.postMessage({ 
+              type: 'progress-update', 
+              percent: percent,
+              status: `Processing preset ${currentPresetIndex}/${presets.length}: ${processedNodesCount}/${totalNodesCount} text elements...`
+            });
           }
         }
       }
       
+      // Send completion message
+      figma.ui.postMessage({ 
+        type: 'progress-update', 
+        percent: 100,
+        status: `Completed! Processed ${processedNodesCount} text elements across ${presets.length} presets.`
+      });
+      
       // Notify user when all presets are processed
-      figma.notify(`Processed ${presets.length} preset groups`);
+      figma.notify(`Processed ${presets.length} preset groups with ${processedNodesCount} text elements`);
     };
     
     // Start processing presets

@@ -119,6 +119,13 @@
   </div>
 </div>
 
+<div class="progress-container" style="display: none; margin: 15px 10px;">
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" style="width: 0%;" id="progress-bar">0%</div>
+  </div>
+  <div class="progress-status" id="progress-status">Processing...</div>
+</div>
+
 <div class="buttons">
   <button class="btn btn-primary btn-lg" id="resize">Resize</button>
   <button class="btn btn-secondary btn-lg" id="cancel">Cancel</button>
@@ -148,7 +155,50 @@ document.querySelectorAll('input[name="autoresizeoptions"]').forEach(radio => {
     radio.addEventListener('change', updateUI);
 });
 
+// Function to update progress bar
+function updateProgress(percent, status) {
+    const progressBar = document.getElementById('progress-bar');
+    const progressStatus = document.getElementById('progress-status');
+    const progressContainer = document.querySelector('.progress-container');
+    
+    // Show progress container
+    progressContainer.style.display = 'block';
+    
+    // Update progress bar
+    progressBar.style.width = percent + '%';
+    progressBar.textContent = percent + '%';
+    
+    // Update status text
+    if (status) {
+        progressStatus.textContent = status;
+    }
+    
+    // If complete, hide after a delay
+    if (percent >= 100) {
+        setTimeout(() => {
+            progressContainer.style.display = 'none';
+            // Re-enable the resize button
+            document.getElementById('resize').disabled = false;
+        }, 2000);
+    }
+}
+
+// Listen for messages from the plugin
+window.onmessage = (event) => {
+    const message = event.data.pluginMessage;
+    
+    if (message && message.type === 'progress-update') {
+        updateProgress(message.percent, message.status);
+    }
+};
+
 document.getElementById('resize').onclick = () => {
+    // Disable the resize button while processing
+    document.getElementById('resize').disabled = true;
+    
+    // Show progress bar at 0%
+    updateProgress(0, 'Starting...');
+    
     const resizeType = document.querySelector('input[name="autoresizeoptions"]:checked').id;
     
     if (resizeType === 'quartermaster') {
