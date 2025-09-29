@@ -1,7 +1,5 @@
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <div class="titleblock">
@@ -119,16 +117,16 @@
   </div>
 </div>
 
-<div class="progress-container" style="display: none; margin: 15px 10px;">
-  <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width: 0%;" id="progress-bar">0%</div>
-  </div>
+<div class="progress-container" style="display: none;">
   <div class="progress-status" id="progress-status">Processing...</div>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" style="width: 0%;" id="progress-bar"></div>
+  </div>
 </div>
 
 <div class="buttons">
-  <button class="btn btn-primary btn-lg" id="resize">Resize</button>
-  <button class="btn btn-secondary btn-lg" id="cancel">Cancel</button>
+  <button class="btn btn-secondary" id="cancel">Cancel</button>
+  <button class="btn btn-primary" id="resize">Resize</button>
 </div>
 
 <script>

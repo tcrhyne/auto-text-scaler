@@ -1,73 +1,133 @@
-hr {
-  margin: 0;
+/* Figma-inspired UI styles */
+:root {
+  --figma-blue: #0d99ff;
+  --figma-hover: #ebf2ff;
+  --figma-bg: #ffffff;
+  --figma-text: #333333;
+  --figma-secondary-text: #888888;
+  --figma-border: #e5e5e5;
+  --figma-radius: 6px;
+  --figma-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-img {
-  width: 40;
-  height: 40;
-  margin-top: 10;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--figma-text);
+  background-color: var(--figma-bg);
+  margin: 0;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--figma-border);
+  margin: 16px 0;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  color: var(--figma-text);
+}
+
+h4 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 12px 0;
+  color: var(--figma-text);
 }
 
 label {
   font-weight: 400;
-}
-
-.form-check {
-  font-size: x-large;
-  font-weight: 100;
+  font-size: 12px;
+  color: var(--figma-secondary-text);
+  display: block;
+  margin-bottom: 4px;
 }
 
 .titleblock {
   display: flex;
+  align-items: center;
+  margin-bottom: 16px;
 }
-  
+
+/* Form elements */
 .form-check {
-  padding-left: 10;
+  margin-bottom: 12px;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
-.buttons {
-  margin-left: 10;
-  margin-top: 10;
+.form-check-input {
+  margin-right: 8px;
 }
 
-.font-size-constraints {
-  padding: 10px;
+.form-check-label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--figma-border);
+  border-radius: var(--figma-radius);
+  font-size: 14px;
+  transition: border-color 0.2s;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: var(--figma-blue);
+  outline: none;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+/* Sections */
+.font-size-constraints, .quartermaster-presets {
+  margin-bottom: 16px;
 }
 
 #ids {
-  margin: 10;
-  width: 60%;
+  margin-top: 8px;
+  margin-left: 24px;
+  width: calc(100% - 24px);
   display: none;
 }
 
 #text:checked ~ #ids { display: block }
 
-.quartermaster-presets {
-  padding: 10px;
-}
-
+/* Preset groups */
 .preset-group {
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 10px;
-  margin-bottom: 15px;
+  border: 1px solid var(--figma-border);
+  border-radius: var(--figma-radius);
+  padding: 12px;
+  margin-bottom: 16px;
+  background-color: #fafafa;
 }
 
 .preset-header {
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: var(--figma-text);
+  font-size: 13px;
 }
 
 .form-row {
   display: flex;
-  margin-right: -5px;
-  margin-left: -5px;
+  margin: 0 -6px;
 }
 
 .form-row > .form-group {
-  padding-right: 5px;
-  padding-left: 5px;
+  padding: 0 6px;
   flex: 1;
 }
 
@@ -75,26 +135,72 @@ label {
   width: 50%;
 }
 
-.progress {
-  height: 20px;
+/* Buttons */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: var(--figma-radius);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--figma-blue);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0088ee;
+}
+
+.btn-primary:disabled {
+  background-color: #b3d9ff;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
   background-color: #f5f5f5;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  color: var(--figma-text);
+  border: 1px solid var(--figma-border);
+}
+
+.btn-secondary:hover {
+  background-color: #eeeeee;
+}
+
+/* Progress bar */
+.progress-container {
+  margin: 16px 0;
+}
+
+.progress {
+  height: 6px;
+  background-color: #f0f0f0;
+  border-radius: 3px;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .progress-bar {
   height: 100%;
-  background-color: #337ab7;
+  background-color: var(--figma-blue);
   color: white;
   text-align: center;
-  line-height: 20px;
-  transition: width .6s ease;
+  font-size: 0;
+  transition: width 0.3s ease;
 }
 
 .progress-status {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 10px;
+  font-size: 12px;
+  color: var(--figma-secondary-text);
+  margin-bottom: 8px;
 }

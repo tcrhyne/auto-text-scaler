@@ -1,7 +1,7 @@
 //This plugin resizes text to fit in its textbox
 
 // show form
-figma.showUI(__html__, { width: 400, height: 580 });
+figma.showUI(__html__, { width: 320, height: 560 });
 
 figma.ui.onmessage = msg => {
   // Extract font size constraints if provided
