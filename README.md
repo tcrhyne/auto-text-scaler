@@ -1,68 +1,65 @@
-# Autosize Text – Figma plugin
+# Auto Text Scaler - Figma Plugin
 
-[![](https://img.shields.io/endpoint?url=https://figma-plugin-badges.vercel.app/api/installs/950454402091975756)](https://www.figma.com/community/plugin/950454402091975756/autosizetext)
+A Figma plugin that automatically resizes text to fit within its textbox. This version includes options for setting minimum and maximum font size constraints and uses 0.5pt size increments for more precise text fitting.
 
-This is the home for  ['Autosize Text' Figma Plugin](https://www.figma.com/community/plugin/950454402091975756/autosizetext). The goal of this plugin is to automatically resize text to fit in its textbox.
+## Features
 
-## How this plugin works
+- Automatically resize text to fit within textboxes
+- Set optional minimum and maximum font size constraints
+- Resize text in 0.5pt increments for more precise fitting
+- Two modes: "Selection" (resize selected text elements) and "Textbox Names" (resize text elements by name)
 
-When triggered this plugin autosizes text to fit within its textbox.
+## Development Setup
 
-For example
+### Prerequisites
 
-### If text it too small it will grow to fit the bounds.
+- [Node.js](https://nodejs.org/) (v16+ recommended)
 
-**Before:** 
+### Installation
 
-![small before](images/small_before.jpg?raw=true) 
+1. Clone this repository
+```
+git clone <repository-url>
+cd auto-text-scaler
+```
 
-**After:** 
+2. Install dependencies
+```
+npm install
+```
 
-![small after](images/small_after.png?raw=true)
+3. Build the plugin
+```
+NODE_OPTIONS=--openssl-legacy-provider npx webpack --mode=development --watch
+```
+Or use the npm script:
+```
+npm run dev
+```
 
-### If text it too big it will shrink to fit the bounds.
+### Installing in Figma
 
+1. Open Figma desktop app or go to figma.com in your browser
+2. Click on the menu icon (hamburger menu) in the top-left corner
+3. Go to "Plugins" > "Development" > "Import plugin from manifest..."
+4. Navigate to your project directory and select the `manifest.json` file
+5. The plugin will now appear in your development plugins list
 
-**Before:** 
+### Using the Plugin
 
+1. Select one or more text layers in your Figma design
+2. Right-click and go to "Plugins" > "Development" > "Auto Text Scaler"
+3. Choose the resize option (Selection or Textbox Names)
+4. Optionally set minimum and maximum font size constraints
+5. Click "Resize" to apply the text resizing
 
-![large before](images/big_before.png?raw=true)
+## Troubleshooting
 
-**After:** 
+If you encounter Node.js compatibility issues when building the plugin, try:
 
-![large after](images/big_after.png?raw=true)
+```
+export NODE_OPTIONS=--openssl-legacy-provider
+```
 
+Before running webpack commands.
 
-### This plugin has three different options to select textboxes to resize.
-
-* **Full Page** - Resizes all textboxes on current page
-* **Selection** - Resizes currently selected textboxes
-* **Textbox Names** - comma seperated list of textbox names to resize (ex. `textbox1,textbox2` with resize textboxes that have names `textbox1` and `textbox2`)
-
-
-## Issues
-
-Please file any issues, bugs or feature requests as an issue on the [GitHub](https://github.com/anovis/autosizetext/issues) page.
-
-## Roadmap
-
- &#9744; Run as background process \
- &#9745; Select specific textboxes to resize
-
-## Want to Contribute
-
-If you would like to contribute to the plugin (e.g. by improving the documentation, solving a bug or adding a cool new feature) submit a [pull request](https://github.com/anovis/autosizetext/pulls).
-
-
-## Running Locally
-
-* `npm install`
-* `npx webpack --mode=development --watch`
-
-Import as a new plugin into Figma
-
-## Want to Support
-
-<!-- markdownlint-disable MD033 -->
-<a href="https://www.buymeacoffee.com/austennovis" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" height="41" width="174"></a>
-<!-- markdownlint-disable MD033 -->
