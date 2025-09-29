@@ -1,5 +1,5 @@
 {
-  "name": "autosizetext",
+  "name": "Auto Text Scaler",
   "id": "950454402091975756",
   "api": "1.0.0",
   "main": "dist/code.js",
