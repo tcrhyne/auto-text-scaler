@@ -5,20 +5,12 @@
 </head>
 
 <div class="titleblock">
-  <img src="<%= require('./logo.png').default %>">
-
-  <h2>Auto Resize Text</h2>
+  <h2>Auto Text Scaler</h2>
 </div>
 <hr />
 
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="autoresizeoptions" id="page" checked />
-  <label class="form-check-label" for="page">
-    Full Page
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="autoresizeoptions" id="selection" />
+  <input class="form-check-input" type="radio" name="autoresizeoptions" id="selection" checked />
   <label class="form-check-label" for="selection">
     Selection
   </label>
@@ -31,6 +23,18 @@
   <input class="form-control ids" type="text" id="ids" placeholder="Textbox Names" />
 </div>
 
+<hr />
+<div class="font-size-constraints">
+  <h4>Font Size Constraints (Optional)</h4>
+  <div class="form-group">
+    <label for="minFontSize">Minimum Font Size (pt)</label>
+    <input class="form-control" type="number" id="minFontSize" placeholder="Min Font Size" min="0" step="0.5" />
+  </div>
+  <div class="form-group">
+    <label for="maxFontSize">Maximum Font Size (pt)</label>
+    <input class="form-control" type="number" id="maxFontSize" placeholder="Max Font Size" min="0" step="0.5" />
+  </div>
+</div>
 
 <div class="buttons">
   <button class="btn btn-primary btn-lg" id="resize">Resize</button>
@@ -41,7 +45,14 @@
 document.getElementById('resize').onclick = () => {
     const resizeType = document.querySelector('input[name="autoresizeoptions"]:checked').id;
     const textIds = document.getElementById('ids').value;
-    parent.postMessage({ pluginMessage: { type: resizeType, textIds:textIds } }, '*')
+    const minFontSize = parseFloat(document.getElementById('minFontSize').value) || null;
+    const maxFontSize = parseFloat(document.getElementById('maxFontSize').value) || null;
+    parent.postMessage({ pluginMessage: { 
+        type: resizeType, 
+        textIds: textIds,
+        minFontSize: minFontSize,
+        maxFontSize: maxFontSize
+    } }, '*')
 }
     
 document.getElementById('cancel').onclick = () => {
