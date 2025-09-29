@@ -27,6 +27,11 @@ label {
 
 .buttons {
   margin-left: 10;
+  margin-top: 10;
+}
+
+.font-size-constraints {
+  padding: 10px;
 }
 
 #ids {
