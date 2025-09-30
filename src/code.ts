@@ -90,7 +90,7 @@ figma.ui.onmessage = msg => {
     
     processNodes()
   }
-  else if (msg.type === 'quartermaster')
+  else if (msg.type === 'list-select')
   {
     // Process each preset
     const presets = msg.presets;
@@ -113,7 +113,7 @@ figma.ui.onmessage = msg => {
     figma.ui.postMessage({ 
       type: 'progress-update', 
       percent: 0,
-      status: `Processing preset 1/${presets.length}: 0/${totalNodesCount} text elements...`
+      status: `Processing item 1/${presets.length}: 0/${totalNodesCount} text elements...`
     });
     
     // Process each preset sequentially to ensure fonts are loaded properly
@@ -141,7 +141,7 @@ figma.ui.onmessage = msg => {
             figma.ui.postMessage({ 
               type: 'progress-update', 
               percent: percent,
-              status: `Processing preset ${currentPresetIndex}/${presets.length}: ${processedNodesCount}/${totalNodesCount} text elements...`
+              status: `Processing item ${currentPresetIndex}/${presets.length}: ${processedNodesCount}/${totalNodesCount} text elements...`
             });
           }
         }
@@ -151,11 +151,11 @@ figma.ui.onmessage = msg => {
       figma.ui.postMessage({ 
         type: 'progress-update', 
         percent: 100,
-        status: `Completed! Processed ${processedNodesCount} text elements across ${presets.length} presets.`
+        status: `Completed! Processed ${processedNodesCount} text elements from list.`
       });
       
       // Notify user when all presets are processed
-      figma.notify(`Processed ${presets.length} preset groups with ${processedNodesCount} text elements`);
+      figma.notify(`Processed ${processedNodesCount} text elements from list`);
     };
     
     // Start processing presets

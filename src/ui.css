@@ -92,18 +92,14 @@ label {
 }
 
 /* Sections */
-.font-size-constraints, .quartermaster-presets {
+.font-size-constraints, .list-select-presets {
   margin-bottom: 16px;
 }
 
-#ids {
-  margin-top: 8px;
-  margin-left: 24px;
-  width: calc(100% - 24px);
-  display: none;
+.textbox-names-container {
+  margin: 12px 0;
+  padding: 0;
 }
-
-#text:checked ~ #ids { display: block }
 
 /* Preset groups */
 .preset-group {
@@ -138,9 +134,21 @@ label {
 /* Buttons */
 .buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 8px;
   margin-top: 16px;
+}
+
+.top-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 16px 0;
+}
+
+.top-buttons .btn {
+  flex: 1;
+  width: 50%;
 }
 
 .btn {
