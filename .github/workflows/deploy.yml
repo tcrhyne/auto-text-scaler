@@ -17,14 +17,16 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16'
+        node-version: '14'
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: npm install
       
     - name: Build plugin
-      run: npm run build:prod
+      run: |
+        export NODE_OPTIONS=--openssl-legacy-provider
+        npm run build:prod
       
     - name: Copy hosted manifest to dist
       run: cp manifest.hosted.json dist/manifest.json
