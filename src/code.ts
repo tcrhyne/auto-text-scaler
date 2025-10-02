@@ -51,7 +51,9 @@ figma.ui.onmessage = msg => {
   else if (msg.type === 'text')
   {
     const tIds = msg.textIds.split(',')
-    const nodes: SceneNode[] = figma.currentPage.findAll(node => node.type === "TEXT" && tIds.includes(node.name))
+    const allNodes: SceneNode[] = figma.currentPage.findAll(node => node.type === "TEXT" && tIds.includes(node.name))
+    // Filter out nodes that are inside component or variant parents
+    const nodes: SceneNode[] = allNodes.filter(node => !isInsideComponentParent(node))
     const totalNodes = nodes.length
     let processedNodes = 0
     
@@ -103,9 +105,11 @@ figma.ui.onmessage = msg => {
     // First count all nodes across all presets
     for (const preset of presets) {
       const textName = preset.name;
-      const nodes = figma.currentPage.findAll(node => 
+      const allNodes = figma.currentPage.findAll(node => 
         node.type === "TEXT" && node.name === textName
       );
+      // Filter out nodes that are inside component or variant parents
+      const nodes = allNodes.filter(node => !isInsideComponentParent(node));
       totalNodesCount += nodes.length;
     }
     
@@ -125,9 +129,11 @@ figma.ui.onmessage = msg => {
         const maxFontSize = preset.maxFontSize !== null ? preset.maxFontSize : undefined;
         
         // Find nodes matching the name
-        const nodes: SceneNode[] = figma.currentPage.findAll(node => 
+        const allNodes: SceneNode[] = figma.currentPage.findAll(node => 
           node.type === "TEXT" && node.name === textName
         );
+        // Filter out nodes that are inside component or variant parents
+        const nodes: SceneNode[] = allNodes.filter(node => !isInsideComponentParent(node));
         
         // Process each node
         for (const node of nodes) {
@@ -170,6 +176,20 @@ figma.ui.onmessage = msg => {
 
 async function loadFont(fontName){
   await figma.loadFontAsync(fontName)
+}
+
+// Helper function to check if a node is inside a component or variant parent
+function isInsideComponentParent(node: SceneNode): boolean {
+  let currentNode = node.parent;
+  
+  while (currentNode && currentNode.type !== 'PAGE') {
+    if (currentNode.type === 'COMPONENT' || currentNode.type === 'COMPONENT_SET') {
+      return true;
+    }
+    currentNode = currentNode.parent;
+  }
+  
+  return false;
 }
 
 
