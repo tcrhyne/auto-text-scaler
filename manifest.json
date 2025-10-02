@@ -1,8 +1,10 @@
 {
   "name": "Auto Text Scaler",
-  "id": "950454402091975756",
+  "id": "1555415883272061841",
   "api": "1.0.0",
   "main": "https://tcrhyne.github.io/auto-text-scaler/code.js",
   "ui": "https://tcrhyne.github.io/auto-text-scaler/ui.html",
-  "editorType": ["figma"]
+  "editorType": ["figma"],
+  "networkAccess": { "allowedDomains": ["none"] },
+  "documentAccess": "dynamic-page"
 }
