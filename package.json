@@ -5,6 +5,7 @@
   "main": "code.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "build:prod": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode=production",
     "dev": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode=development --watch"
   },
   "author": "",

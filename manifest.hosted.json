@@ -1,0 +1,8 @@
+{
+  "name": "Auto Text Scaler",
+  "id": "950454402091975756",
+  "api": "1.0.0",
+  "main": "https://yourusername.github.io/auto-text-scaler/code.js",
+  "ui": "https://yourusername.github.io/auto-text-scaler/ui.html",
+  "editorType": ["figma"]
+}
