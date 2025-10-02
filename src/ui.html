@@ -36,21 +36,37 @@
 <hr />
 
 <div class="textbox-names-container" style="display: none;">
-  <div class="form-group">
-    <label for="ids">Enter Textbox Names (comma separated)</label>
-    <input class="form-control" type="text" id="ids" placeholder="e.g., Header, Title, Caption" />
+  <div class="preset-group">
+    <div class="form-group">
+      <label for="ids">Textbox Name</label>
+      <input class="form-control" type="text" id="ids" value="#Full_Body_Content" />
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="minFontSize">Min Font Size (pt)</label>
+        <input class="form-control" type="number" id="minFontSize" value="5.5" min="0" step="0.5" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="maxFontSize">Max Font Size (pt)</label>
+        <input class="form-control" type="number" id="maxFontSize" value="11" min="0" step="0.5" />
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="font-size-constraints">
   <!-- <h4>Font Size Constraints (Optional)</h4> -->
-  <div class="form-group">
-    <label for="minFontSize">Minimum Font Size (pt)</label>
-    <input class="form-control" type="number" id="minFontSize" placeholder="Min Font Size" min="0" step="0.5" />
-  </div>
-  <div class="form-group">
-    <label for="maxFontSize">Maximum Font Size (pt)</label>
-    <input class="form-control" type="number" id="maxFontSize" placeholder="Max Font Size" min="0" step="0.5" />
+  <div class="preset-group">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="minFontSizeSelection">Min Font Size (pt)</label>
+        <input class="form-control" type="number" id="minFontSizeSelection" placeholder="Min Font Size" min="0" step="0.5" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="maxFontSizeSelection">Max Font Size (pt)</label>
+        <input class="form-control" type="number" id="maxFontSizeSelection" placeholder="Max Font Size" min="0" step="0.5" />
+      </div>
+    </div>
   </div>
 </div>
 
@@ -61,16 +77,16 @@
   <div class="preset-group">
     <div class="form-group">
       <label>Textbox Name</label>
-      <input class="form-control" type="text" id="preset1_name" value="#Display_Name_Line_1" />
+      <input class="form-control" type="text" id="preset1_name" />
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label>Min Font Size (pt)</label>
-        <input class="form-control" type="number" id="preset1_min" value="12" min="0" step="0.5" />
+        <input class="form-control" type="number" id="preset1_min" min="0" step="0.5" />
       </div>
       <div class="form-group col-md-6">
         <label>Max Font Size (pt)</label>
-        <input class="form-control" type="number" id="preset1_max" value="16" min="0" step="0.5" />
+        <input class="form-control" type="number" id="preset1_max" min="0" step="0.5" />
       </div>
     </div>
   </div>
@@ -78,16 +94,16 @@
   <div class="preset-group">
     <div class="form-group">
       <label>Textbox Name</label>
-      <input class="form-control" type="text" id="preset2_name" value="#Display_Name_Line_2" />
+      <input class="form-control" type="text" id="preset2_name" />
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label>Min Font Size (pt)</label>
-        <input class="form-control" type="number" id="preset2_min" value="9" min="0" step="0.5" />
+        <input class="form-control" type="number" id="preset2_min" min="0" step="0.5" />
       </div>
       <div class="form-group col-md-6">
         <label>Max Font Size (pt)</label>
-        <input class="form-control" type="number" id="preset2_max" value="11" min="0" step="0.5" />
+        <input class="form-control" type="number" id="preset2_max" min="0" step="0.5" />
       </div>
     </div>
   </div>
@@ -95,16 +111,16 @@
   <div class="preset-group">
     <div class="form-group">
       <label>Textbox Name</label>
-      <input class="form-control" type="text" id="preset3_name" value="#Display_Name" />
+      <input class="form-control" type="text" id="preset3_name" />
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label>Min Font Size (pt)</label>
-        <input class="form-control" type="number" id="preset3_min" value="10.5" min="0" step="0.5" />
+        <input class="form-control" type="number" id="preset3_min" min="0" step="0.5" />
       </div>
       <div class="form-group col-md-6">
         <label>Max Font Size (pt)</label>
-        <input class="form-control" type="number" id="preset3_max" value="12" min="0" step="0.5" />
+        <input class="form-control" type="number" id="preset3_max" min="0" step="0.5" />
       </div>
     </div>
   </div>
@@ -112,16 +128,16 @@
   <div class="preset-group">
     <div class="form-group">
       <label>Textbox Name</label>
-      <input class="form-control" type="text" id="preset4_name" value="#Full_Body_Content" />
+      <input class="form-control" type="text" id="preset4_name" />
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label>Min Font Size (pt)</label>
-        <input class="form-control" type="number" id="preset4_min" value="6" min="0" step="0.5" />
+        <input class="form-control" type="number" id="preset4_min" min="0" step="0.5" />
       </div>
       <div class="form-group col-md-6">
         <label>Max Font Size (pt)</label>
-        <input class="form-control" type="number" id="preset4_max" value="11" min="0" step="0.5" />
+        <input class="form-control" type="number" id="preset4_max" min="0" step="0.5" />
       </div>
     </div>
   </div>
@@ -142,14 +158,15 @@ function updateUI() {
     // Hide all sections by default
     document.querySelector('.list-select-presets').style.display = 'none';
     document.querySelector('.textbox-names-container').style.display = 'none';
-    document.querySelector('.font-size-constraints').style.display = 'block';
+    document.querySelector('.font-size-constraints').style.display = 'none';
     
     // Show the appropriate section based on selection
     if (selectedOption === 'list-select') {
         document.querySelector('.list-select-presets').style.display = 'block';
-        document.querySelector('.font-size-constraints').style.display = 'none';
     } else if (selectedOption === 'text') {
         document.querySelector('.textbox-names-container').style.display = 'block';
+    } else if (selectedOption === 'selection') {
+        document.querySelector('.font-size-constraints').style.display = 'block';
     }
 }
 
@@ -239,8 +256,12 @@ document.getElementById('resize').onclick = () => {
     } else {
         // Process normal selection or text options
         const textIds = document.getElementById('ids').value;
-        const minFontSize = parseFloat(document.getElementById('minFontSize').value) || null;
-        const maxFontSize = parseFloat(document.getElementById('maxFontSize').value) || null;
+        const minFontSize = resizeType === 'text' ? 
+            parseFloat(document.getElementById('minFontSize').value) || null : 
+            parseFloat(document.getElementById('minFontSizeSelection').value) || null;
+        const maxFontSize = resizeType === 'text' ? 
+            parseFloat(document.getElementById('maxFontSize').value) || null : 
+            parseFloat(document.getElementById('maxFontSizeSelection').value) || null;
         
         parent.postMessage({ pluginMessage: { 
             type: resizeType, 
