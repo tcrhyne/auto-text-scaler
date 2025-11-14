@@ -15,6 +15,15 @@
 <hr />
 
 <div class="form-check">
+  <input class="form-check-input" type="checkbox" id="onlyVisible" />
+  <label class="form-check-label" for="onlyVisible">
+    Only process visible layers
+  </label>
+</div>
+
+<hr />
+
+<div class="form-check">
   <input class="form-check-input" type="radio" name="autoresizeoptions" id="selection" checked />
   <label class="form-check-label" for="selection">
     Selection
@@ -251,7 +260,8 @@ document.getElementById('resize').onclick = () => {
         
         parent.postMessage({ pluginMessage: { 
             type: resizeType,
-            presets: presets
+            presets: presets,
+            onlyVisible: document.getElementById('onlyVisible').checked
         } }, '*');
     } else {
         // Process normal selection or text options
@@ -267,7 +277,8 @@ document.getElementById('resize').onclick = () => {
             type: resizeType, 
             textIds: textIds,
             minFontSize: minFontSize,
-            maxFontSize: maxFontSize
+            maxFontSize: maxFontSize,
+            onlyVisible: document.getElementById('onlyVisible').checked
         } }, '*');
     }
 }

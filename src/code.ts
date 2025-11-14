@@ -7,9 +7,14 @@ figma.ui.onmessage = msg => {
   // Extract font size constraints if provided
   const minFontSize = msg.minFontSize !== null ? msg.minFontSize : undefined;
   const maxFontSize = msg.maxFontSize !== null ? msg.maxFontSize : undefined;
+  const onlyVisible = msg.onlyVisible || false;
   
   if (msg.type === 'selection'){
-    const nodes = figma.currentPage.selection
+    let nodes = figma.currentPage.selection
+    // Filter by visibility if requested
+    if (onlyVisible) {
+      nodes = nodes.filter(node => isNodeVisible(node))
+    }
     const totalNodes = nodes.filter(node => node.type === 'TEXT').length
     let processedNodes = 0
     
@@ -53,7 +58,11 @@ figma.ui.onmessage = msg => {
     const tIds = msg.textIds.split(',')
     const allNodes: SceneNode[] = figma.currentPage.findAll(node => node.type === "TEXT" && tIds.includes(node.name))
     // Filter out nodes that are inside component or variant parents
-    const nodes: SceneNode[] = allNodes.filter(node => !isInsideComponentParent(node))
+    let nodes: SceneNode[] = allNodes.filter(node => !isInsideComponentParent(node))
+    // Filter by visibility if requested
+    if (onlyVisible) {
+      nodes = nodes.filter(node => isNodeVisible(node))
+    }
     const totalNodes = nodes.length
     let processedNodes = 0
     
@@ -109,7 +118,11 @@ figma.ui.onmessage = msg => {
         node.type === "TEXT" && node.name === textName
       );
       // Filter out nodes that are inside component or variant parents
-      const nodes = allNodes.filter(node => !isInsideComponentParent(node));
+      let nodes = allNodes.filter(node => !isInsideComponentParent(node));
+      // Filter by visibility if requested
+      if (onlyVisible) {
+        nodes = nodes.filter(node => isNodeVisible(node));
+      }
       totalNodesCount += nodes.length;
     }
     
@@ -133,7 +146,11 @@ figma.ui.onmessage = msg => {
           node.type === "TEXT" && node.name === textName
         );
         // Filter out nodes that are inside component or variant parents
-        const nodes: SceneNode[] = allNodes.filter(node => !isInsideComponentParent(node));
+        let nodes: SceneNode[] = allNodes.filter(node => !isInsideComponentParent(node));
+        // Filter by visibility if requested
+        if (onlyVisible) {
+          nodes = nodes.filter(node => isNodeVisible(node));
+        }
         
         // Process each node
         for (const node of nodes) {
@@ -190,6 +207,20 @@ function isInsideComponentParent(node: SceneNode): boolean {
   }
   
   return false;
+}
+
+// Helper function to check if a node and all its parents are visible
+function isNodeVisible(node: SceneNode): boolean {
+  let currentNode: BaseNode = node;
+  
+  while (currentNode && currentNode.type !== 'PAGE') {
+    if ('visible' in currentNode && !currentNode.visible) {
+      return false;
+    }
+    currentNode = currentNode.parent;
+  }
+  
+  return true;
 }
 
 
